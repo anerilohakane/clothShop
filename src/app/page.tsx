@@ -20,11 +20,11 @@ import {
   Boxes,
   Users,
   ReceiptText,
-  Sparkles,
   Store,
   Menu,
   X,
-  ShieldCheck
+  ShieldCheck,
+  Plus
 } from 'lucide-react';
 
 export default function Home() {
@@ -126,48 +126,104 @@ export default function Home() {
   ];
 
   return (
-    <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: 'var(--bg-primary)' }}>
-      {/* Sidebar Navigation */}
-      <aside
-        style={{
-          width: '260px',
-          backgroundColor: '#0c1322',
-          borderRight: '1px solid var(--border-subtle)',
-          display: 'flex',
-          flexDirection: 'column',
-          position: 'fixed',
-          top: 0,
-          bottom: 0,
-          left: 0,
-          zIndex: 50,
-          padding: '24px 16px',
-        }}
-      >
-        {/* Brand Header */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '12px', paddingBottom: '24px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '24px' }}>
+    <div className="app-container">
+      {/* Mobile Top Header */}
+      <header className="mobile-topbar">
+        <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
           <div
             style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '12px',
+              width: '32px',
+              height: '32px',
+              borderRadius: '8px',
               background: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)',
               color: '#fff'
             }}
           >
-            <Store size={22} />
+            <Store size={18} />
           </div>
           <div>
-            <h1 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0, letterSpacing: '-0.5px' }}>
-              VogueCraft
-            </h1>
-            <p style={{ margin: 0, fontSize: '0.72rem', color: '#818cf8', fontWeight: 600 }}>
-              Cloth Boutique ERP & POS
-            </p>
+            <div style={{ fontSize: '0.95rem', fontWeight: 800 }}>VogueCraft</div>
+            <div style={{ fontSize: '0.68rem', color: '#818cf8' }}>Cloth POS & ERP</div>
           </div>
+        </div>
+
+        <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
+          <button
+            onClick={() => setActiveTab('billing')}
+            className="btn btn-primary btn-sm"
+            style={{ padding: '5px 10px', fontSize: '0.75rem' }}
+          >
+            <Plus size={14} /> Bill
+          </button>
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="btn btn-secondary btn-sm"
+            style={{ padding: '6px' }}
+          >
+            {mobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+      </header>
+
+      {/* Backdrop for Mobile Sidebar Drawer */}
+      {mobileMenuOpen && (
+        <div
+          onClick={() => setMobileMenuOpen(false)}
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.65)',
+            zIndex: 45,
+            backdropFilter: 'blur(3px)'
+          }}
+        />
+      )}
+
+      {/* Row containing Sidebar & Main Content */}
+      <div className="content-row">
+        {/* Sidebar Navigation (Desktop & Mobile Drawer) */}
+        <aside className={`sidebar-desktop ${mobileMenuOpen ? 'mobile-open' : ''}`}>
+        {/* Brand Header */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', paddingBottom: '20px', borderBottom: '1px solid var(--border-subtle)', marginBottom: '20px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <div
+              style={{
+                width: '40px',
+                height: '40px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #6366f1 0%, #ec4899 100%)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)',
+                color: '#fff'
+              }}
+            >
+              <Store size={22} />
+            </div>
+            <div>
+              <h1 style={{ fontSize: '1.15rem', fontWeight: 800, margin: 0, letterSpacing: '-0.5px' }}>
+                VogueCraft
+              </h1>
+              <p style={{ margin: 0, fontSize: '0.72rem', color: '#818cf8', fontWeight: 600 }}>
+                Cloth Boutique ERP & POS
+              </p>
+            </div>
+          </div>
+          {mobileMenuOpen && (
+            <button
+              onClick={() => setMobileMenuOpen(false)}
+              style={{ background: 'none', border: 'none', color: '#94a3b8', cursor: 'pointer' }}
+            >
+              <X size={20} />
+            </button>
+          )}
         </div>
 
         {/* Navigation Tabs */}
@@ -178,7 +234,10 @@ export default function Home() {
             return (
               <button
                 key={item.id}
-                onClick={() => setActiveTab(item.id as any)}
+                onClick={() => {
+                  setActiveTab(item.id as any);
+                  setMobileMenuOpen(false);
+                }}
                 style={{
                   display: 'flex',
                   alignItems: 'center',
@@ -220,7 +279,7 @@ export default function Home() {
         <div
           className="glass-panel"
           style={{
-            padding: '14px',
+            padding: '12px',
             borderRadius: '12px',
             display: 'flex',
             alignItems: 'center',
@@ -230,8 +289,8 @@ export default function Home() {
         >
           <div
             style={{
-              width: '34px',
-              height: '34px',
+              width: '32px',
+              height: '32px',
               borderRadius: '50%',
               backgroundColor: 'rgba(16, 185, 129, 0.2)',
               color: '#10b981',
@@ -240,55 +299,49 @@ export default function Home() {
               justifyContent: 'center'
             }}
           >
-            <ShieldCheck size={18} />
+            <ShieldCheck size={16} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
-            <div style={{ fontSize: '0.82rem', fontWeight: 700, color: '#f1f5f9' }}>Vogue Boutique</div>
-            <div style={{ fontSize: '0.72rem', color: '#10b981' }}>● System Online</div>
+            <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#f1f5f9' }}>Vogue Boutique</div>
+            <div style={{ fontSize: '0.7rem', color: '#10b981' }}>● System Active</div>
           </div>
         </div>
       </aside>
 
       {/* Main Content Area */}
-      <main
-        style={{
-          marginLeft: '260px',
-          flex: 1,
-          padding: '28px 36px',
-          maxWidth: '1600px',
-          width: 'calc(100% - 260px)'
-        }}
-      >
+      <main className="main-content">
         {/* Top Header Bar */}
         <header
           style={{
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            marginBottom: '26px',
-            paddingBottom: '16px',
+            flexWrap: 'wrap',
+            gap: '12px',
+            marginBottom: '22px',
+            paddingBottom: '14px',
             borderBottom: '1px solid var(--border-subtle)'
           }}
         >
           <div>
-            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, margin: 0, color: '#f8fafc' }}>
+            <h2 style={{ fontSize: '1.45rem', fontWeight: 800, margin: 0, color: '#f8fafc' }}>
               {activeTab === 'dashboard' && 'Store Management Dashboard'}
               {activeTab === 'billing' && 'POS Quick Billing Counter'}
               {activeTab === 'inventory' && 'Clothing Stock & Inventory Catalog'}
               {activeTab === 'staff' && 'Employee Staff, Attendance & Salary Payroll'}
               {activeTab === 'history' && 'Sales Billing Archive & Invoices'}
             </h2>
-            <p style={{ margin: '4px 0 0 0', fontSize: '0.85rem', color: '#94a3b8' }}>
+            <p style={{ margin: '4px 0 0 0', fontSize: '0.82rem', color: '#94a3b8' }}>
               All-in-one software for apparel boutiques, clothing shops & garment outlets.
             </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexWrap: 'wrap' }}>
             <div style={{
               backgroundColor: 'rgba(255,255,255,0.05)',
-              padding: '8px 14px',
+              padding: '6px 12px',
               borderRadius: '8px',
-              fontSize: '0.82rem',
+              fontSize: '0.8rem',
               color: '#cbd5e1',
               border: '1px solid rgba(255,255,255,0.08)'
             }}>
@@ -298,7 +351,7 @@ export default function Home() {
               onClick={() => setActiveTab('billing')}
               className="btn btn-primary btn-sm"
             >
-              <ShoppingCart size={15} /> Open New Bill
+              <ShoppingCart size={15} /> Quick Bill
             </button>
           </div>
         </header>
@@ -349,8 +402,39 @@ export default function Home() {
           />
         )}
       </main>
+      </div>
 
-      {/* Printable Receipt Modal */}
+      {/* Bottom Mobile Tab Bar (For phone screens) */}
+      <nav className="mobile-bottom-nav">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = activeTab === item.id;
+          return (
+            <button
+              key={item.id}
+              onClick={() => setActiveTab(item.id as any)}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                gap: '3px',
+                background: 'none',
+                border: 'none',
+                color: isActive ? '#818cf8' : '#64748b',
+                padding: '4px',
+                fontSize: '0.68rem',
+                fontWeight: isActive ? 700 : 500,
+                cursor: 'pointer'
+              }}
+            >
+              <Icon size={18} />
+              <span>{item.label.split(' ')[0]}</span>
+            </button>
+          );
+        })}
+      </nav>
+
+      {/* Printable Receipt & WhatsApp Modal */}
       {activeInvoice && (
         <InvoiceModal
           bill={activeInvoice}

@@ -307,7 +307,7 @@ export const DashboardAnalytics: React.FC<DashboardAnalyticsProps> = ({
       </div>
 
       {/* SECOND ROW: 2 Charts Grid (Bar Orders + Category Donut Chart) */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '20px' }}>
+      <div className="grid-2-col">
         {/* GRAPH 2: Bar Chart - Orders Count */}
         <div className="glass-panel" style={{ padding: '24px' }}>
           <div style={{ marginBottom: '16px' }}>
@@ -390,7 +390,7 @@ export const DashboardAnalytics: React.FC<DashboardAnalyticsProps> = ({
       </div>
 
       {/* THIRD ROW: Payment Distribution & Quick Restock */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+      <div className="grid-equal-2-col">
         {/* Payment Methods Breakdown */}
         <div className="glass-panel" style={{ padding: '22px' }}>
           <h3 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px' }}>

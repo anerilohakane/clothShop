@@ -164,9 +164,9 @@ export const BillingSection: React.FC<BillingSectionProps> = ({
   };
 
   return (
-    <div style={{ display: 'grid', gridTemplateColumns: '1.6fr 1.1fr', gap: '24px' }}>
+    <div className="pos-layout-grid">
       {/* LEFT COLUMN: Product Catalog & Fast Lookup */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}>
+      <div className="pos-product-catalog">
         {/* Search & Filter Header */}
         <div className="glass-panel" style={{ padding: '18px' }}>
           <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '14px' }}>
@@ -225,16 +225,7 @@ export const BillingSection: React.FC<BillingSectionProps> = ({
         </div>
 
         {/* Product Cards Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
-            gap: '14px',
-            maxHeight: 'calc(100vh - 280px)',
-            overflowY: 'auto',
-            paddingRight: '4px'
-          }}
-        >
+        <div className="pos-product-cards-grid">
           {filteredProducts.map((p) => {
             const isOutOfStock = p.stock <= 0;
             const isLowStock = p.stock <= p.minStockAlert && p.stock > 0;
@@ -315,7 +306,7 @@ export const BillingSection: React.FC<BillingSectionProps> = ({
       </div>
 
       {/* RIGHT COLUMN: POS Billing Terminal */}
-      <div className="glass-panel-elevated" style={{ padding: '22px', display: 'flex', flexDirection: 'column', height: 'fit-content' }}>
+      <div className="glass-panel-elevated pos-terminal-cart" style={{ padding: '22px', display: 'flex', flexDirection: 'column', height: 'fit-content' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <ShoppingCart size={20} style={{ color: '#818cf8' }} />

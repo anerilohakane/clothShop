@@ -39,18 +39,27 @@
   --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-* {
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-body {
-  font-family: var(--font-sans);
+html {
+  font-size: 16px;
+  -webkit-text-size-adjust: 100%;
+}
+
+html, body {
+  width: 100%;
+  min-height: 100vh;
   background-color: var(--bg-primary);
   color: var(--text-main);
-  min-height: 100vh;
   overflow-x: hidden;
+}
+
+body {
+  font-family: var(--font-sans);
   background-image: 
     radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.12) 0px, transparent 50%),
     radial-gradient(at 100% 100%, rgba(168, 85, 247, 0.1) 0px, transparent 50%);
@@ -59,22 +68,7 @@ body {
 
 input, select, textarea, button {
   font-family: inherit;
-}
-
-/* Scrollbar customization */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-::-webkit-scrollbar-track {
-  background: var(--bg-primary);
-}
-::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  box-sizing: border-box;
 }
 
 /* Glassmorphism Classes */
@@ -94,21 +88,6 @@ input, select, textarea, button {
   box-shadow: var(--shadow-md);
 }
 
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.25s ease-out forwards;
-}
-
 /* Button & Badge Utility Styles */
 .btn {
   display: inline-flex;
@@ -123,6 +102,7 @@ input, select, textarea, button {
   cursor: pointer;
   transition: var(--transition);
   outline: none;
+  white-space: nowrap;
 }
 
 .btn-primary {
@@ -189,6 +169,186 @@ input, select, textarea, button {
   background: rgba(99, 102, 241, 0.15);
   color: #818cf8;
   border: 1px solid rgba(99, 102, 241, 0.25);
+}
+
+/* Master Layout Framework */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+  position: relative;
+}
+
+.content-row {
+  display: flex;
+  flex: 1;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* Desktop Sidebar */
+.sidebar-desktop {
+  width: 260px;
+  background-color: #0c1322;
+  border-right: 1px solid var(--border-subtle);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  padding: 24px 16px;
+  transition: transform 0.3s ease;
+}
+
+/* Main Content Wrapper */
+.main-content {
+  margin-left: 260px;
+  flex: 1;
+  padding: 24px 28px;
+  width: calc(100% - 260px);
+  min-width: 0;
+  transition: all 0.3s ease;
+}
+
+/* Mobile Topbar */
+.mobile-topbar {
+  display: none;
+  background-color: #0c1322;
+  border-bottom: 1px solid var(--border-subtle);
+  padding: 12px 16px;
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Bottom Tab Navigation for Mobile */
+.mobile-bottom-nav {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #0f172a;
+  border-top: 1px solid var(--border-subtle);
+  padding: 8px 6px;
+  z-index: 60;
+  justify-content: space-around;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+/* POS Responsive Grids */
+.pos-layout-grid {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.pos-product-catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.pos-product-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 12px;
+  max-height: calc(100vh - 280px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.pos-terminal-cart {
+  min-width: 0;
+  width: 100%;
+}
+
+/* 2-Column Responsive Grids */
+.grid-2-col {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+.grid-equal-2-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  width: 100%;
+}
+
+/* RESPONSIVE BREAKPOINTS */
+
+/* Tablet & Smaller Laptops */
+@media (max-width: 1100px) {
+  .pos-layout-grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .grid-2-col, .grid-equal-2-col {
+    grid-template-columns: 1fr;
+  }
+  .pos-product-cards-grid {
+    max-height: 480px;
+  }
+}
+
+/* Mobile Screens (Phones < 900px) */
+@media (max-width: 900px) {
+  .sidebar-desktop {
+    transform: translateX(-100%);
+    box-shadow: 10px 0 30px rgba(0,0,0,0.7);
+    width: 280px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+  .sidebar-desktop.mobile-open {
+    transform: translateX(0);
+  }
+  
+  .mobile-topbar {
+    display: flex;
+  }
+  
+  .mobile-bottom-nav {
+    display: flex;
+  }
+  
+  .main-content {
+    margin-left: 0 !important;
+    width: 100% !important;
+    padding: 14px 12px 84px 12px !important;
+  }
+  
+  .pos-product-cards-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)) !important;
+    gap: 10px !important;
+    max-height: 400px !important;
+  }
+}
+
+/* Small Phones (< 480px) */
+@media (max-width: 480px) {
+  .pos-product-cards-grid {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+  }
+  .btn {
+    padding: 6px 12px;
+    font-size: 0.78rem;
+  }
 }
 
 /* Print Invoice Styling */
