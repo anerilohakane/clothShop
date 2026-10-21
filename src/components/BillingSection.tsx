@@ -306,7 +306,11 @@ export const BillingSection: React.FC<BillingSectionProps> = ({
       </div>
 
       {/* RIGHT COLUMN: POS Billing Terminal */}
-      <div className="glass-panel-elevated pos-terminal-cart" style={{ padding: '22px', display: 'flex', flexDirection: 'column', height: 'fit-content' }}>
+      <div
+        id="billing-cart-terminal"
+        className="glass-panel-elevated pos-terminal-cart"
+        style={{ padding: '22px', display: 'flex', flexDirection: 'column', height: 'fit-content' }}
+      >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px', paddingBottom: '12px', borderBottom: '1px solid var(--border-subtle)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <ShoppingCart size={20} style={{ color: '#818cf8' }} />

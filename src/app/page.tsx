@@ -125,6 +125,20 @@ export default function Home() {
     { id: 'history', label: 'Bills & Invoices', icon: ReceiptText },
   ];
 
+  const scrollToBillingCart = () => {
+    setActiveTab('billing');
+    setTimeout(() => {
+      const cartEl = document.getElementById('billing-cart-terminal');
+      if (cartEl) {
+        cartEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        cartEl.style.boxShadow = '0 0 25px rgba(99, 102, 241, 0.8)';
+        setTimeout(() => {
+          cartEl.style.boxShadow = 'none';
+        }, 1500);
+      }
+    }, 100);
+  };
+
   return (
     <div className="app-container">
       {/* Mobile Top Header */}
@@ -152,9 +166,9 @@ export default function Home() {
 
         <div style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
           <button
-            onClick={() => setActiveTab('billing')}
+            onClick={scrollToBillingCart}
             className="btn btn-primary btn-sm"
-            style={{ padding: '5px 10px', fontSize: '0.75rem' }}
+            style={{ padding: '6px 12px', fontSize: '0.78rem', gap: '4px' }}
           >
             <Plus size={14} /> Bill
           </button>
@@ -348,7 +362,7 @@ export default function Home() {
               📅 {currentDate || 'Today'}
             </div>
             <button
-              onClick={() => setActiveTab('billing')}
+              onClick={scrollToBillingCart}
               className="btn btn-primary btn-sm"
             >
               <ShoppingCart size={15} /> Quick Bill
